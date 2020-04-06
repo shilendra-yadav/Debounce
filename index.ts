@@ -1,9 +1,4 @@
 // Import stylesheets
-import './style.css';
-
-// Write TypeScript code!
-const appDiv: HTMLElement = document.getElementById('app');
-appDiv.innerHTML = `<h1>TypeScript Starter</h1>`;
 
 var myDebounce = (cb, wait) => {
   let timeInterval;
@@ -13,15 +8,22 @@ var myDebounce = (cb, wait) => {
     timeInterval = setTimeout(cb.apply(context,args),wait);
   }
 }
+
 function sayHello(ele) {
-  console.log(this)
+  console.log(ele)
   console.log('My name is called')
 }
 
-myDebounce(sayHello,1000)()
-// const amy = {
-//   name: 'amy',
-//   speak: myDebounce(sayHello,10000),
-// }
+myDebounce(sayHello,1000)(10)
 
-// amy.speak()
+var myThrottle = (cb, wait) => {
+  let interval;
+  return function (...args){
+    let context = this;
+    if(!interval){ 
+      cb.apply(context, args);
+      interval = true
+      setTimeout(() => interval = false, wait)
+    }
+  }
+}
